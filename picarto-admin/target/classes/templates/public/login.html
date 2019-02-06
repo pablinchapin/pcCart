@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org"
+    layout:decorator="layout/guestLayout">
+<head>
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Log in</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        
+        <form action="home" th:action="@{/login}" method="post">
+            <p><input type="email" class="form-control" name="username" placeholder="Email"></p>
+            <p><input type="password" class="form-control" name="password" placeholder="Password"></p>
+            <p><button type="submit" class="btn btn-primary btn-block btn-flat" th:text="#{label.login}">LogIn</button></p>
+
+            <div th:if="${param.error}">
+                <p><span th:text="#{error.login_failed}">Invalid Email and Password.</span></p>
+            </div>
+            <div th:if="${param.logout}">
+                <p><span th:text="#{info.logout_success}">You have been logged out.</span></p>
+            </div>            
+            <div th:if="${msg!=null}">
+                <p><span th:text="${msg}"></span></p>
+            </div>            
+        </form>        
+        
+        <a href="@{/forgotPwd}" text="#{label.forgot_password}" class="broken_link">I forgot my password</a><br>   
+    </div>
+    
+</body>
+</html>
