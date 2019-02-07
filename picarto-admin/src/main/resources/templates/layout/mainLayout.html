@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">PCart Admin</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    
+    
+    <link   rel="stylesheet" 
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+            th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css}"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+            crossorigin="anonymous">
+    
+    <link   rel="stylesheet" 
+            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    
+    <link   rel="stylesheet" 
+            href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css"
+            th:href="@{https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css}"/>
+    
+    <link   rel="stylesheet" 
+            href="dist/css/adminLTE.min.css" 
+            th:href="@{/dist/css/adminLTE.min.css}"/>
+
+</head>
+
+<body>
+    
+    <div class="wrapper">
+    
+        <header class="main-header">
+
+            <a href="@{/home}" class="logo broken_link">...</a>
+
+            <nav class="navbar navbar-static-top" role="navigation">
+                ...
+            </nav>
+        </header>
+    
+        <aside class="main-sidebar">
+            <section class="sidebar">
+
+                <div class="user-panel">
+                    ...
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li><a href="@{'/home'}" class="broken_link"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="@{'/categories'}" class="broken_link"><i class="fa fa-folder-open"></i> <span>Categories</span></a></li>
+                    <li><a href="@{'/products'}" class="broken_link"><i class="fa fa-file"></i> <span>Products</span></a></li>
+                    <li><a href="@{'/orders'}" class="broken_link"><i class="fa fa-cart-arrow-down"></i> <span>Orders</span></a></li>
+                    <li><a href="@{'/customers'}" class="broken_link"><i class="fa fa-smile-o"></i> <span>Customers</span></a></li>
+                    <li><a href="@{'/users'}" class="broken_link"><i class="fa fa-users"></i> Users</a></li>
+                    <li><a href="@{'/roles'}" class="broken_link"><i class="fa fa-user"></i> Roles</a></li>
+                    <li><a href="@{'/permissions'}" class="broken_link"><i class="fa fa-shield"></i> Permissions</a></li>            
+                </ul>
+
+            </section>
+        </aside>
+    
+        <div class='content-wrapper'>
+            <div layout:fragment="pageHeader">
+                <section class="content-header">
+                    <h1>Header Title</h1>
+                </section>
+            </div>
+
+            <section class="content">
+                <div layout:fragment="content">
+
+                </div>
+            </section>
+        </div>
+        
+        <footer class="main-footer">
+            ...
+        </footer>
+        
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+      
+</body>
+
+</html>
