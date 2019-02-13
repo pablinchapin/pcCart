@@ -21,6 +21,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 /**
  *
@@ -48,6 +49,23 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     }
     
     
+    @Bean
+    public FilterRegistrationBean securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(securityFilter);
+        registration.setOrder(Integer.MAX_VALUE - 1);
+        registration.setName(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME);
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean PostAuthorizationFilterRegistrationBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(postAuthorizationFilter);
+        registrationBean.setOrder(Integer.MAX_VALUE);
+        return registrationBean;
+    }
+        
+    
     @Override
     public void addViewControllers(ViewControllerRegistry registry){
         registry.addViewController("/login")
@@ -64,20 +82,20 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     
     
     @Bean
-    public FilterRegistrationBean securityFilterChain(@Qualifier(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME) Filter securityFilter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean(securityFilter);
-        registration.setOrder(Integer.MAX_VALUE - 1);
-        registration.setName(AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME);
-        return registration;
+    public ClassLoaderTemplateResolver emailTemplateResolver(){
+        ClassLoaderTemplateResolver emailTemplateResolver = new ClassLoaderTemplateResolver();
+        
+        emailTemplateResolver.setPrefix("email/");
+        emailTemplateResolver.setSuffix(".html");
+        
+        emailTemplateResolver.setTemplateMode("HTML5");
+        emailTemplateResolver.setCharacterEncoding("UTF-8");
+        emailTemplateResolver.setOrder(2);
+        
+        return emailTemplateResolver;
     }
-
-    @Bean
-    public FilterRegistrationBean PostAuthorizationFilterRegistrationBean() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(postAuthorizationFilter);
-        registrationBean.setOrder(Integer.MAX_VALUE);
-        return registrationBean;
-    }
+    
+    
     
     
     

@@ -7,6 +7,7 @@ package com.pablinchapin.picarto.admin.controller;
 
 import com.pablinchapin.picarto.admin.security.AuthenticatedUser;
 import java.util.Locale;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,10 +20,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  */
 public abstract class JCartAdminBaseController {
     
+    //protected final Logger logger = Logger.getLogger(JCartAdminBaseController.class);
+    
+    protected final Logger logger = Logger.getLogger(getClass());
     
     
     @Autowired 
     protected MessageSource messageSource;
+    
+    
+    protected abstract String getHeaderTitle();
     
     public String getMessage(String code){
         return messageSource.getMessage(code, null, null);
