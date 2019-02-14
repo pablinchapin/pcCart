@@ -7,9 +7,16 @@ package com.pablinchapin.picarto.admin.configuration;
 
 import com.pablinchapin.picarto.admin.security.PostAuthorizationFilter;
 import javax.servlet.Filter;
+import org.apache.catalina.Context;
+import org.apache.catalina.connector.Connector;
+import org.apache.tomcat.util.descriptor.web.SecurityCollection;
+import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +37,10 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 public class WebConfiguration extends WebMvcConfigurerAdapter {
+    
+    
+    @Value("${server.port:9443}")
+    private int serverPort;
     
     @Autowired
     private MessageSource messageSource;
@@ -93,6 +104,44 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         emailTemplateResolver.setOrder(2);
         
         return emailTemplateResolver;
+    }
+    
+    
+    @Bean
+    public ServletWebServerFactory servletContainer(){
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory(){
+            
+            @Override
+            protected void postProcessContext(Context context){
+                
+                SecurityConstraint securityConstraint = new SecurityConstraint();
+                securityConstraint.setUserConstraint("CONFIDENTIAL");
+                
+                SecurityCollection collection = new SecurityCollection();
+                collection.addPattern("/*");
+                
+                securityConstraint.addCollection(collection);
+                
+                context.addConstraint(securityConstraint);
+            
+            }
+        };
+        
+        tomcat.addAdditionalTomcatConnectors(redirectConnector());
+        
+        return tomcat;
+    }
+    
+    
+    private Connector redirectConnector(){
+    
+        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+        connector.setScheme("http");
+        connector.setPort(9090);
+        connector.setSecure(false);
+        connector.setRedirectPort(serverPort);
+        
+        return connector;
     }
     
     
